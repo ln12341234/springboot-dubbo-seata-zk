@@ -11,6 +11,8 @@ import io.seata.samples.integration.common.enums.RspStatusEnum;
 import io.seata.samples.integration.common.response.ObjectResponse;
 import io.seata.samples.integration.order.entity.TOrder;
 import io.seata.samples.integration.order.mapper.TOrderMapper;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,9 +26,11 @@ import org.springframework.stereotype.Service;
  * @since 2019-09-04
  */
 @Service
+@DubboService
 public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> implements ITOrderService {
 
-    @Reference(version = "1.0.0")
+    //@Reference(version = "1.0.0")
+    @DubboReference(timeout = 1200000)
     private AccountDubboService accountDubboService;
 
     /**
@@ -42,6 +46,9 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> impleme
         accountDTO.setUserId(orderDTO.getUserId());
         accountDTO.setAmount(orderDTO.getOrderAmount());
         ObjectResponse objectResponse = accountDubboService.decreaseAccount(accountDTO);
+
+        //抛出异常
+        //int i = 1 / 0;
 
         //生成订单号
         orderDTO.setOrderNo(UUID.randomUUID().toString().replace("-",""));

@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/seata?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/seata_test?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: root
-    password: 123456
+    password: root
   application:
     name: dubbo-account-example
 
@@ -19,7 +19,7 @@ dubbo:
   protocol:
     id: dubbo
     name: dubbo
-    port: 20880
+    port: -1
   registry:
     id: dubbo-account-example-registry
     address: zookeeper://127.0.0.1:2181
@@ -41,7 +41,8 @@ mybatis-plus:
 seata:
   enabled: true
   application-id: account-seata-example
-  tx-service-group: account-service-seata-service-group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
+  #tx-service-group: account-service-seata-service-group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
+  tx-service-group: my_test_tx_group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
   registry:
     type: zk
     zk:
@@ -50,11 +51,13 @@ seata:
       session-timeout: 6000
       cluster: default
   config:
-    type: zk
+    type: file
     zk:
       server-addr: 127.0.0.1:2181
       connect-timeout: 2000
       session-timeout: 6000
+    file:
+      name: file.conf
   enable-auto-data-source-proxy: true
   use-jdk-proxy: false
   data-source-proxy-mode: AT

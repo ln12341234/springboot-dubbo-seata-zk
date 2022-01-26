@@ -13,7 +13,7 @@ dubbo:
   protocol:
     id: dubbo
     name: dubbo
-    port: 10001
+    port: -1
   registry:
     id: dubbo-business-example-registry
     address: zookeeper://127.0.0.1:2181
@@ -25,7 +25,8 @@ dubbo:
 seata:
   enabled: true
   application-id: business-seata-example
-  tx-service-group: business-service-seata-service-group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
+  #tx-service-group: business-service-seata-service-group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
+  tx-service-group: my_test_tx_group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
   registry:
     type: zk
     zk:
@@ -34,11 +35,13 @@ seata:
       session-timeout: 6000
       cluster: default
   config:
-    type: zk
+    type: file
     zk:
       server-addr: 127.0.0.1:2181
       connect-timeout: 2000
       session-timeout: 6000
+    file:
+      name: file.conf
   enable-auto-data-source-proxy: true
   use-jdk-proxy: false
   data-source-proxy-mode: AT

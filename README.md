@@ -290,6 +290,8 @@ create table `lock_table` (
 通过查看以上源代码我们可以看出
 zk模式下数据的存储格式。并且使用的zk的永久节点存储。
 
+注意：seata1.0 开始，提供了Zookeeper配置中心的配置脚本https://github.com/seata/seata/blob/develop/script/config-center/zk/
+
 ###### 2.4.2.1.创建根节点，其中根节点为`/seata`
 
 ```java
